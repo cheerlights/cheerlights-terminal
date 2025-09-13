@@ -1,0 +1,14 @@
+[project]
+name = "cheerlights-terminal"
+version = "0.1.0"
+description = "A whimsical terminal app for displaying CheerLights colors"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "cheerlights-api>=0.1.2",
+    "colorama>=0.4.6",
+    "rich>=14.1.0",
+]
+
+[project.scripts]
+cheerlights = "cheerlights_terminal.main:main"
