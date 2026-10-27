@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.13"
 
 [[package]]
@@ -57,7 +57,7 @@ wheels = [
 [[package]]
 name = "cheerlights-terminal"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "cheerlights-api" },
     { name = "colorama" },
