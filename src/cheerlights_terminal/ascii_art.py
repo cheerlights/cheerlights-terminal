@@ -1,15 +1,15 @@
-"""ASCII Art generation and coloring for CheerLights terminal app using Rich."""
+"""ASCII art assets and true-color Rich rendering helpers for CheerLights."""
 
-from rich.console import Console
+from __future__ import annotations
+
+import math
+
 from rich.text import Text
-from rich.panel import Panel
-from rich.align import Align
-from rich.columns import Columns
-from rich.rule import Rule
-from rich.layout import Layout
 
-CHEERLIGHTS_ASCII = """
- ██████╗ ██╗  ██╗ ███████╗ ███████╗ ██████╗ 
+from .colors import rgb_to_hex, scale_brightness, tint_rgb
+
+CHEERLIGHTS_ASCII = """\
+ ██████╗ ██╗  ██╗ ███████╗ ███████╗ ██████╗
 ██╔════╝ ██║  ██║ ██╔════╝ ██╔════╝ ██╔══██╗
 ██║      ███████║ █████╗   █████╗   ██████╔╝
 ██║      ██╔══██║ ██╔══╝   ██╔══╝   ██╔══██╗
@@ -21,83 +21,48 @@ CHEERLIGHTS_ASCII = """
 ██║     ██║ ██║  ███╗ ███████║    ██║    ███████╗
 ██║     ██║ ██║   ██║ ██╔══██║    ██║    ╚════██║
 ███████╗██║ ╚██████╔╝ ██║  ██║    ██║    ███████║
-╚══════╝╚═╝  ╚═════╝  ╚═╝  ╚═╝    ╚═╝    ╚══════╝
-"""
+╚══════╝╚═╝  ╚═════╝  ╚═╝  ╚═╝    ╚═╝    ╚══════╝"""
 
-# Decorative elements for enhanced styling (Windows-safe)
-DECORATIVE_TOP = "=" * 50
-DECORATIVE_BOTTOM = "-" * 50
+CHEERLIGHTS_LINES: tuple[str, ...] = tuple(CHEERLIGHTS_ASCII.splitlines())
 
-# Mapping CheerLights colors to Rich color names
-COLOR_MAP = {
-    'red': 'bright_red',
-    'green': 'bright_green',
-    'blue': 'bright_blue',
-    'cyan': 'bright_cyan',
-    'white': 'bright_white',
-    'yellow': 'bright_yellow',
-    'purple': 'bright_magenta',
-    'magenta': 'bright_magenta',
-    'orange': 'orange1',
-    'pink': 'hot_pink',
-    'oldlace': 'wheat1',
-    'warmwhite': 'wheat1',
-}
 
-console = Console()
+def render_glowing_ascii(
+    rgb: tuple[int, int, int],
+    phase: float = 0.0,
+    shimmer: bool = True,
+    flash: float = 0.0,
+) -> Text:
+    """Render CHEERLIGHTS_ASCII with a true-color vertical gradient and subtle shimmer."""
+    text = Text(no_wrap=True)
+    total_lines = len(CHEERLIGHTS_LINES)
+    # Apply temporary white flash on color change transitions
+    base_rgb = tint_rgb(rgb, min(0.85, flash)) if flash > 0.01 else rgb
 
-def display_cheerlights_app(color_name, hex_color):
-    """Display the complete CheerLights terminal app using Rich with enhanced styling."""
-    # Get Rich color for the current CheerLights color
-    rich_color = COLOR_MAP.get(color_name.lower(), 'bright_white')
+    for row_idx, line in enumerate(CHEERLIGHTS_LINES):
+        if not line.strip():
+            text.append("\n")
+            continue
 
-    # Create the main ASCII art with gradient-like effect (no decorative borders)
-    ascii_art = Text()
-    lines = CHEERLIGHTS_ASCII.strip().split('\n')
-    for i, line in enumerate(lines):
-        # Create a subtle gradient effect by varying brightness
-        if i in [0, 5, 7, 11]:  # Top and bottom lines of CHEER and LIGHTS get extra brightness
-            ascii_art.append(line + '\n', style=f"bold {rich_color}")
-        elif i in [1, 4, 8, 10]:  # Second lines get medium brightness
-            ascii_art.append(line + '\n', style=f"{rich_color}")
-        else:  # Middle lines and empty line get standard brightness
-            ascii_art.append(line + '\n', style=f"dim {rich_color}")
+        # Subtle vertical sheen across the two stacked words
+        local_row = row_idx if row_idx < 6 else row_idx - 7
+        vertical_curve = 1.18 - 0.14 * abs(local_row - 2.2)
 
-    # Create styled panel for ASCII art
-    ascii_panel = Panel(
-        Align.center(ascii_art),
-        title=f"[bold bright_white on {rich_color}] * CHEERLIGHTS TERMINAL * [/]",
-        title_align="center",
-        border_style=f"bold {rich_color}",
-        padding=(1, 3),
-        expand=False
-    )
+        if shimmer:
+            # Smooth horizontal wave traveling across the letters
+            for col_idx, ch in enumerate(line):
+                if ch == " ":
+                    text.append(" ")
+                    continue
+                wave = math.sin(phase * 2.2 - col_idx * 0.14 - row_idx * 0.28)
+                factor = vertical_curve + 0.22 * wave
+                cell_hex = rgb_to_hex(scale_brightness(base_rgb, factor))
+                style = f"bold {cell_hex}" if factor > 1.12 else cell_hex
+                text.append(ch, style=style)
+        else:
+            row_hex = rgb_to_hex(scale_brightness(base_rgb, vertical_curve))
+            text.append(line, style=f"bold {row_hex}")
 
-    # Display everything with streamlined layout
-    console.clear()
-    console.print()
-    console.print(ascii_panel)
-    console.print()
+        if row_idx < total_lines - 1:
+            text.append("\n")
 
-    # Add Discord CTA panel
-    discord_cta = Text()
-    discord_cta.append("🎉 ", style="bold bright_yellow")
-    discord_cta.append("Join the CheerLights Community!", style="bold bright_white")
-    discord_cta.append("\n\n")
-    discord_cta.append("💬 ", style="bright_blue")
-    discord_cta.append("Connect with makers, share projects, and discuss IoT lighting!", style="bright_white")
-    discord_cta.append("\n")
-    discord_cta.append("🔗 ", style="bright_green")
-    discord_cta.append("Discord: ", style="bold bright_white")
-    discord_cta.append("https://cheerlights.com/discord", style=f"bold {rich_color} underline")
-
-    discord_panel = Panel(
-        discord_cta,
-        title="[bold bright_white on bright_blue] * JOIN OUR COMMUNITY * [/]",
-        title_align="center",
-        border_style="bright_blue",
-        padding=(1, 2),
-        expand=False
-    )
-
-    console.print(discord_panel)
+    return text
