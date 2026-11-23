@@ -117,7 +117,7 @@ class AmbientLampCanvas(Widget):
 
 
 class ZenHintBar(Widget):
-    """Minimal whisper bar at the bottom of Zen mode."""
+    """Shortcut hint bar at the bottom of Zen mode."""
 
     DEFAULT_CSS = """
     ZenHintBar {

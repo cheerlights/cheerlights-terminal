@@ -1,4 +1,4 @@
-/* CheerLights Terminal — Textual 8.x Stylesheet */
+/* CheerLights Terminal: Textual stylesheet */
 
 Screen {
     background: $background;

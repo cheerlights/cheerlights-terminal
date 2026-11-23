@@ -1,4 +1,4 @@
-"""Cinematic TerminalTextEffects (TTE) intro & one-shot CLI rendering."""
+"""TerminalTextEffects (TTE) intro and one-shot CLI rendering."""
 
 from __future__ import annotations
 
@@ -111,7 +111,7 @@ def display_once(
     effect_name: str | None = "beams",
     console: Console | None = None,
 ) -> None:
-    """Render a one-shot cinematic CheerLights view (optional TTE + Rich telemetry card)."""
+    """Render a one-shot CheerLights view (optional TTE animation + Rich color card)."""
     out = console or Console()
     accent = event.display_hex
     fg = contrasting_text_color(accent)

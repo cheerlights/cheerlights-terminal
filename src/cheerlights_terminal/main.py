@@ -20,7 +20,7 @@ from .widgets.led_strip import LED_EFFECTS
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="cheerlights",
-        description="CheerLights Terminal — live, animated Textual TUI for global IoT lights.",
+        description="CheerLights Terminal: live Textual TUI for global CheerLights IoT lights.",
     )
     parser.add_argument(
         "--version",
@@ -30,7 +30,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--once",
         action="store_true",
-        help="Show a cinematic one-shot snapshot (TTE animation + Rich telemetry) and exit.",
+        help="Print a one-shot snapshot (TTE animation + color card) and exit.",
     )
     parser.add_argument(
         "--intro",

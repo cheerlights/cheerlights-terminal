@@ -310,7 +310,7 @@ class CheerLightsApp(App[None]):
             self._apply_active_event(event, notify=announce and changed)
         elif announce and changed:
             self.notify(
-                f"Global light changed to {event.color.upper()} — press [L] for Live",
+                f"Global light changed to {event.color.upper()} (press L for Live)",
                 title="Live Update (Demo Active)",
                 timeout=4.0,
             )
@@ -354,7 +354,7 @@ class CheerLightsApp(App[None]):
                 except asyncio.CancelledError:
                     return
                 except Exception:
-                    # Seamless fallback to HTTP polling while backing off MQTT reconnects
+                    # Fall back to HTTP polling while backing off MQTT reconnects
                     self._set_transport_status("HTTP POLL")
                     await self._poll_for_duration(mqtt_backoff)
                     mqtt_backoff = min(60.0, mqtt_backoff * 1.8)
@@ -457,7 +457,7 @@ class CheerLightsApp(App[None]):
 
     def action_refresh(self) -> None:
         if self._offline_mode:
-            self.notify("Offline demo mode — live refresh disabled", timeout=2.5)
+            self.notify("Offline demo mode: live refresh disabled", timeout=2.5)
             return
         self.notify("Refreshing CheerLights feed...", timeout=2.0)
         self._load_initial_data()

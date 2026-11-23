@@ -72,7 +72,7 @@ class VirtualLEDStrip(Widget):
         self.refresh()
 
     def trigger_ripple(self) -> None:
-        """Trigger a celebratory outward light ripple across the LEDs."""
+        """Trigger an outward light ripple across the LEDs."""
         self._ripple = 1.0
         self.refresh()
 
@@ -127,7 +127,7 @@ class VirtualLEDStrip(Widget):
             bulb_rgb = rgb
             glyph = "●"
 
-        # Overlay outward celebration ripple when a color transition occurs
+        # Overlay outward ripple when a color transition occurs
         if self._ripple > 0.01:
             center_dist = abs(norm - 0.5) * 2.0
             wave_front = 1.0 - self._ripple

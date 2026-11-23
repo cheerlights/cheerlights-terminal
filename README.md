@@ -1,6 +1,6 @@
 # CheerLights Terminal
 
-A terminal application for [CheerLights](https://cheerlights.com), the global network of synchronized IoT lights. It connects to the live CheerLights MQTT broker and ThingSpeak feed to display the current global color, recent change history, and community statistics directly in your terminal.
+A terminal app for [CheerLights](https://cheerlights.com), the global network of synchronized IoT lights. Connects to the CheerLights MQTT broker and ThingSpeak feed to show the current global color, recent history, and color stats.
 
 ![CheerLights Terminal](screenshot.png)
 

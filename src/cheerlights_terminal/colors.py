@@ -64,7 +64,7 @@ class ColorEvent:
 
     @property
     def display_hex(self) -> str:
-        """A terminal-friendly vibrant hex for glows & UI accents."""
+        """A brighter hex value for dark-terminal borders and accents."""
         return DISPLAY_BOOST.get(self.color, self.hex_code)
 
 
