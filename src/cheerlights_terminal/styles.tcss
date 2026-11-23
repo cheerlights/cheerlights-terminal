@@ -1,0 +1,94 @@
+/* CheerLights Terminal — Textual 8.x Stylesheet */
+
+Screen {
+    background: $background;
+    layout: vertical;
+}
+
+Header {
+    background: $surface;
+    color: $foreground;
+}
+
+#led-top {
+    margin: 0 1;
+    height: 1;
+}
+
+#main-body {
+    height: 1fr;
+    padding: 0 1;
+    overflow-y: auto;
+}
+
+#top-row {
+    height: auto;
+    min-height: 17;
+}
+
+#hero-card {
+    width: 2fr;
+    height: auto;
+    min-height: 17;
+    background: $surface;
+    border: round $primary;
+    border-title-align: center;
+    border-title-style: bold;
+    margin-right: 1;
+}
+
+#inspector-card {
+    width: 1fr;
+    min-width: 30;
+    height: auto;
+    min-height: 17;
+    background: $surface;
+    border: round $primary;
+    border-title-align: left;
+    border-title-style: bold;
+}
+
+#bottom-row {
+    height: 1fr;
+    min-height: 10;
+    margin-top: 1;
+}
+
+#history-card {
+    width: 1fr;
+    height: 1fr;
+    background: $surface;
+    border: round $panel;
+    border-title-align: left;
+    border-title-style: bold;
+    margin-right: 1;
+}
+
+#stats-card {
+    width: 1fr;
+    height: 1fr;
+    background: $surface;
+    border: round $panel;
+    border-title-align: left;
+    border-title-style: bold;
+}
+
+#palette-card {
+    height: auto;
+    margin: 1 1 0 1;
+    background: $surface;
+    border: round $panel;
+    border-title-align: left;
+    border-title-style: dim;
+}
+
+#community-bar {
+    height: 1;
+    margin: 0 2;
+    content-align: center middle;
+    color: $text-muted;
+}
+
+Footer {
+    background: $surface;
+}
