@@ -1,18 +1,40 @@
 [project]
 name = "cheerlights-terminal"
-version = "0.1.0"
-description = "A whimsical terminal app for displaying CheerLights colors"
+version = "0.2.0"
+description = "Terminal dashboard for the global CheerLights IoT color network"
 readme = "README.md"
+license = { file = "LICENSE" }
 requires-python = ">=3.13"
 dependencies = [
-    "cheerlights-api>=0.1.2",
-    "colorama>=0.4.6",
-    "rich>=14.1.0",
+    "cheerlights-api>=0.2.0",
+    "paho-mqtt>=2.1.0",
+    "rich>=15.0.0",
+    "terminaltexteffects>=0.14.0",
+    "textual>=8.0.0",
 ]
 
 [project.scripts]
 cheerlights = "cheerlights_terminal.main:main"
 
+[dependency-groups]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.25.0",
+    "ruff>=0.11.0",
+]
+
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.8.0,<1.0.0"]
+build-backend = "uv_build"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]

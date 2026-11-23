@@ -1,3 +1,3 @@
-"""CheerLights Terminal App - A whimsical terminal display for CheerLights colors."""
+"""CheerLights Terminal — A live, animated TUI for the global CheerLights IoT network."""
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
